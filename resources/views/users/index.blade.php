@@ -17,7 +17,11 @@
             @foreach ($users as $user)
         <tr>
             <td>
+
+                @if(Auth::user()->id !== $user->id)
             <a href="{{ route('user-edit', ['id' => $user->id]) }}" title="Edit user details">
+                @endif
+
                 {{ $user -> getFullName()}}
             </a>
 
@@ -36,7 +40,7 @@
              </td>
 
              <td>
-                    {{ (!empty($user->dateofbirth)) ? $user->dateofbirth : 'No contact number provided.' }}
+                    @datetime($user->dateofbirth)
             </td>
 
              <td>
@@ -44,6 +48,11 @@
              </td>
 
             @endforeach
+
+            <a href= {{ route('users-create') }} class="btn btn-primary" >Add user</a>
+            <a href= {{ route('report-view') }} class="btn btn-primary" >Generate Report</a>
+
+
             @endif
 
         @if(Auth::user()->role_id > 1)
@@ -79,8 +88,15 @@
             </td>
         </tr>
         @endif
+
         @if ($errors->any())
-        {{ implode('', $errors->all('<div>:message</div>')) }}
+        @foreach($errors as $e)
+
+        <div class="alert alert-primary" role="alert"> {{ $e }} </div>
+
+        @endforeach
         @endif
+
+
     </tbody>
 </table>

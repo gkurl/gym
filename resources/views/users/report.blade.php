@@ -78,21 +78,19 @@
                     </div>
                 </div>
             </nav>
-
-{!! Form::model($user,['url' => route('user-update',['id' => $user->id]) ]) !!}
-    {{ method_field('PATCH') }}
-    @include('users.form')
-    <br>
-    {!! Form::submit('Update user',['class'=>'btn btn-primary']) !!}
+        </br>
+<div class="form-group row">
+        <div class="col-md-6">
+ {!! Form::open(['url' => route('report-generate') ]) !!}
+<input type="date" name="reportmonth" class="form-control">
+{!! Form::submit('Generate report') !!}
 {!! Form::close() !!}
-<br>
-{!! Form::open(['url' => route('user-destroy', $user->id), 'method' => 'DELETE']) !!}
-{{Form::submit('Delete user', ['class' => 'btn btn-primary', 'onclick' => "return confirm('Are you sure you want to delete this user?')"])}}
-{!! Form::close() !!}
+        </div>
+    </div>
+    @if (isset($message))
+        <div class="alert alert-primary" role="alert"> {{ $message }} </div>
+    @endif
 
-@if (isset($message))
-<div class="alert alert-primary" role="alert"> {{ $message }} </div>
-@endif
-
-</body>
+    </body>
 </html>
+

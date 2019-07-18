@@ -40,9 +40,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::group(['middleware' => 'admin'], function() {
         Route::get('users/create', 'UserController@create')->name('users-create');
         Route::get('users/{user}/edit', 'UserController@edit')->name('user-edit');
-        Route::get('users', 'UserController@store')->name('user-store');
+        Route::post('users/store', 'UserController@store')->name('user-store');
         Route::patch('users/{user}', 'UserController@update')->name('user-update');
-        Route::delete('users/{user}', 'UserController@destroy')->name('user-destroy');
+        Route::delete('users/{user}/delete', 'UserController@destroy')->name('user-destroy');
+        Route::get('users/reportview', 'UserController@reportview')->name('report-view');
+        Route::post('users/generatereport', 'UserController@generatereport')->name('report-generate');
     });
 
     Route::group(['middleware' => 'auth'], function () {

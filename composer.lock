@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "398ca4cfb8dcb96dc3a81a806e3567de",
+    "content-hash": "57dc285ee07cd006686f51b1ac389f09",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -2850,6 +2850,51 @@
                 "dump"
             ],
             "time": "2019-06-17T17:37:00+00:00"
+        },
+        {
+            "name": "techsemicolon/laravel-query-to-csv",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/techsemicolon/laravel-query-to-csv.git",
+                "reference": "a44e4bc1e3c9aa4bee4321c715d6a0f399fd1cd2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/techsemicolon/laravel-query-to-csv/zipball/a44e4bc1e3c9aa4bee4321c715d6a0f399fd1cd2",
+                "reference": "a44e4bc1e3c9aa4bee4321c715d6a0f399fd1cd2",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.6.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Laravelquerytocsv\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mihir Bhende",
+                    "email": "tech.semicolon@gmail.com"
+                }
+            ],
+            "description": "Export the data from a query builder or raw select query into csv directly, eliminating overhead on php and in much less execution time",
+            "keywords": [
+                "csv",
+                "csvexport",
+                "export",
+                "exporttocsv",
+                "laravel",
+                "php"
+            ],
+            "time": "2017-12-24T15:31:15+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

@@ -48,12 +48,23 @@
         </div>
 </div>
 
-{{-- <div class ="form-group-row">
+
+@presence('ipsum')
+<div class ="form-group-row">
         {!! Form::label('password', 'Password', ['class' => 'col-sm-6']) !!}
         <div class ="col-sm-6">
             {!! Form::text('password', null, ['class' => 'form-control', 'id' => 'password']) !!}
         </div>
-</div> --}}
+</div>
+
+<div class="form-group row">
+        {!! Form::label('password-confirm', 'Confirm Password', ['class' => 'col-sm-6']) !!}
+        <div class ="col-sm-6">
+            {!! Form::text('password', null, ['enctype' => 'enctype="multipart/form-data"', 'class' => 'form-control', 'id' => 'password-confirm', 'name' => 'password_confirmation']) !!}
+        </div>
+    </div>
+@endpresence
+
 
 
 

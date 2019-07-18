@@ -37,5 +37,14 @@ class AppServiceProvider extends ServiceProvider
                 return 'Not provided';
             }
         });
+
+        Blade::directive('presence', function($alias) {
+            return "<?php if (in_array(\Request::route()->getName(), config('presence.'.$alias))): ?>";
+        });
+
+
+        Blade::directive('endpresence', function() {
+            return '<?php endif; ?>';
+        });
     }
 }

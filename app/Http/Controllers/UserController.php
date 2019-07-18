@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use \App\Providers\AppServiceProvider\QuerytoCSV;
 
 class UserController extends Controller
 {
@@ -46,23 +48,26 @@ class UserController extends Controller
         [
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|unique:users',
             'address' => 'required|string|max:255',
-            'dateofbirth' => 'date_format:d/m/Y',
-            'contactnumber' => 'numeric',
-            'subscription' => 'required',
-            'password' => 'required|string|min:8|confirmed'
+            'dateofbirth' => 'nullable',
+            'contactnumber' => 'nullable',
+            'subscription_id' => 'required|numeric',
+            'password' => 'required|string|min:6|confirmed'
+
         ]);
 
         if($validator -> passes()){
 
+            $request['password'] = bcrypt($request['password']);
+
             User::create($request -> all());
 
-            return redirect(route('user.index'))->with('message', 'User successfully created.');
+            return redirect(route('user-index'))->with('message', 'User successfully created.');
 
         } else {
 
-            return redirect(route('user.index'))->withErrors($validator);
+            return redirect(route('user-index'))->withErrors($validator);
 
         }
 
@@ -104,6 +109,7 @@ class UserController extends Controller
         $date = strtotime($date);
         $date = date('d/m/Y', $date);
 
+
         $validator = Validator::make($request -> all(),
         [
             'firstname' => 'required|string|max:255',
@@ -119,13 +125,13 @@ class UserController extends Controller
 
             $request->subscription_id = (int)$request->subscription_id;
 
-           $user -> update($request -> all());
+            $user -> update($request -> all());
 
-            return redirect(route('user-index'))->with('message', 'User successfully updated.');
+            return redirect(route('user-edit', $user->id))->with('message', 'User successfully updated.');
 
         } else {
 
-            return redirect(route('user-index'))->withErrors($validator);
+            return redirect(route('user-edit', $user->id))->withErrors($validator);
 
         }
 
@@ -142,5 +148,46 @@ class UserController extends Controller
         $user -> delete();
 
         return redirect(route('user-index'))->with('message', 'User successfully removed.');
+    }
+
+    public function reportview() {
+
+        return view('users.report');
+    }
+
+    public function generatereport(Request $request) {
+
+        $res = DB::select(
+            "CALL monthlyreport(\"$request->reportmonth\")"
+        );
+
+
+
+        if(count($res)>0) {
+
+            $CsvData = ["Full Name,Email,Address,Contact Number,Subscription"];
+            foreach($res as $r) {
+
+                $r=(array)$r;
+
+                $CsvData[]= $r['Full Name'] .','. $r['Email'] .','. $r['Address'] .','. $r['Contact Number'] .','. $r['Subscription']. "\n";
+            }
+
+            $filename = $request->reportmonth . ".csv";
+            $filepath = base_path().'/'.$filename;
+            $file = fopen($filepath, "w+");
+
+            foreach($CsvData as $exp_data) {
+                fputcsv($file,explode(',',$exp_data));
+            }
+            fclose($file);
+
+            $headers = ['Content-Type' => 'application/csv'];
+            return response()->download($filepath,$filename,$headers)->deleteFileAfterSend(true);
+
+        }
+
+        return view('users.report')->with('message', 'No date provided or no data present to download   ');
+
     }
 }
