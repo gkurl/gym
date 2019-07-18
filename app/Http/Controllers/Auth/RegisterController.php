@@ -28,7 +28,11 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    public function redirectTo() {
+
+        return action('UserController@index');
+
+    }
 
     /**
      * Create a new controller instance.
@@ -53,10 +57,10 @@ class RegisterController extends Controller
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'address' => ['required', 'string', 'max:255'],
-            'dateofbirth' => ['date_format:d/m/Y'],
-            'contactnumber' => ['numeric'],
-            'subscription' => ['required'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'dateofbirth' => ['nullable', 'date'],
+            'contactnumber' => ['nullable', 'numeric'],
+            'subscription_id' => ['required'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
     }
 
@@ -75,7 +79,7 @@ class RegisterController extends Controller
             'address' => $data['address'],
             'dateofbirth' =>$data['dateofbirth'],
             'contactnumber' => $data['contactnumber'],
-            'subscription' => $data['contactnumber'],
+            'subscription_id' => (int)$data['subscription_id'],
             'password' => Hash::make($data['password']),
         ]);
     }

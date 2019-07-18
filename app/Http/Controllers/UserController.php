@@ -15,8 +15,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
-        return view('users.index')->with('users', User::all());
+        $users = User::all();
+        return view('users.index')->with('users', $users);
     }
 
     /**
@@ -28,7 +30,7 @@ class UserController extends Controller
     {
         $user = new User();
 
-        return view('users.create')->with(compact('customer'));
+        return view('users.create')->with(compact('user'));
     }
 
     /**
@@ -97,9 +99,36 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user -> update($request -> all());
+        //format date into required format
+        $date = $request->dateofbirth;
+        $date = strtotime($date);
+        $date = date('d/m/Y', $date);
 
-        return redirect(route('user.index'))->with('message', 'User successfully updated.');
+        $validator = Validator::make($request -> all(),
+        [
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users,email,' .$user->id, //to prevent email required error for current user
+            'address' => 'required|string|max:255',
+            'dateofbirth' => 'nullable',
+            'contactnumber' => 'nullable',
+            'subscription_id' => 'required|numeric'
+        ]);
+
+        if($validator -> passes()){
+
+            $request->subscription_id = (int)$request->subscription_id;
+
+           $user -> update($request -> all());
+
+            return redirect(route('user-index'))->with('message', 'User successfully updated.');
+
+        } else {
+
+            return redirect(route('user-index'))->withErrors($validator);
+
+        }
+
     }
 
     /**
@@ -112,6 +141,6 @@ class UserController extends Controller
     {
         $user -> delete();
 
-        return redirect(route('user.index'))->with('message', 'User successfully removed.');
+        return redirect(route('user-index'))->with('message', 'User successfully removed.');
     }
 }

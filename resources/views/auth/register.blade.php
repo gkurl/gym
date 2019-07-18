@@ -85,7 +85,7 @@
                             <label for="contactnumber" class="col-md-4 col-form-label text-md-right">{{ __('Contact number') }}</label>
 
                             <div class="col-md-6">
-                                <input id="contactnumber" type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" class="form-control @error('contactnumber') is-invalid @enderror" name="contactnumber" value="{{ old('contactnumber') }}" required autocomplete="contactnumber" autofocus>
+                                <input id="contactnumber" type="tel" class="form-control @error('contactnumber') is-invalid @enderror" name="contactnumber" value="{{ old('contactnumber') }}" required autocomplete="contactnumber" autofocus>
 
                                 @error('contactnumber')
                                     <span class="invalid-feedback" role="alert">
@@ -96,15 +96,15 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="subscription" class="col-md-4 col-form-label text-md-right">{{ __('Choose your subscription') }}</label>
+                            <label for="subscription_id" class="col-md-4 col-form-label text-md-right">{{ __('Choose your subscription') }}</label>
 
                             <div class="col-md-6">
-                                <select name="subscription" class="form-control @error('subscription') is-invalid @enderror" name="subscription" value="{{ old('subscription') }}" required autocomplete="subscription" autofocus>
-                                    <option value="monthly">Monthly</option>
-                                    <option value="annual">Annual</option>
+                                <select name="subscription_id" class="form-control @error('subscription_id') is-invalid @enderror" name="subscription_id" required autocomplete="subscription_id" autofocus>
+                                    <option value=1>Monthly - &#163; 10</option>
+                                    <option value=2>Annual - &#163; 120</option>
                                 </select>
 
-                                @error('subscription')
+                                @error('subscription_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

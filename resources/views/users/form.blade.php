@@ -1,58 +1,59 @@
+{{-- @extends('layouts.app') --}}
 <div class ="form-group-row">
     {!! Form::label('firstname', 'First name', ['class' => 'col-sm-6']) !!}
     <div class ="col-sm-6">
-        {!! Form::text('firstname', null, ['class' => 'form-control', 'id' => 'firstname']) !!}
+        {!! Form::text('firstname', $user->firstname, ['class' => "form-control", 'id' => 'firstname']) !!}
     </div>
 </div>
 
 <div class ="form-group-row">
         {!! Form::label('lastname', 'Last name', ['class' => 'col-sm-6']) !!}
         <div class ="col-sm-6">
-            {!! Form::text('lastname', null, ['class' => 'form-control', 'id' => 'lastname']) !!}
+            {!! Form::text('lastname', $user->lastname, ['class' => 'form-control', 'id' => 'lastname']) !!}
         </div>
 </div>
 
 <div class ="form-group-row">
         {!! Form::label('email', 'Email', ['class' => 'col-sm-6']) !!}
         <div class ="col-sm-6">
-            {!! Form::text('email', null, ['class' => 'form-control', 'id' => 'email']) !!}
+            {!! Form::text('email', $user->email, ['class' => 'form-control', 'id' => 'email']) !!}
         </div>
 </div>
 
 <div class ="form-group-row">
         {!! Form::label('address', 'Address', ['class' => 'col-sm-6']) !!}
         <div class ="col-sm-6">
-            {!! Form::text('address', null, ['class' => 'form-control', 'id' => 'address']) !!}
+            {!! Form::text('address', $user->address, ['class' => 'form-control', 'id' => 'address']) !!}
         </div>
 </div>
 
 <div class ="form-group-row">
         {!! Form::label('dateofbirth', 'Date of birth', ['class' => 'col-sm-6']) !!}
         <div class ="col-sm-6">
-            {!! Form::text('dateofbirth', null, ['class' => 'form-control', 'id' => 'dateofbirth']) !!}
+            {!! Form::date('dateofbirth', $user->dateofbirth, ['class' => 'form-control', 'id' => 'dateofbirth']) !!}
         </div>
 </div>
 
 <div class ="form-group-row">
         {!! Form::label('contactnumber', 'Contact number', ['class' => 'col-sm-6']) !!}
         <div class ="col-sm-6">
-            {!! Form::text('contactnumber', null, ['class' => 'form-control', 'id' => 'contactnumber']) !!}
+            {!! Form::text('contactnumber', $user->contactnumber, ['class' => 'form-control', 'id' => 'contactnumber']) !!}
         </div>
 </div>
 
 <div class ="form-group-row">
-        {!! Form::label('subscription', 'Subscription', ['class' => 'col-sm-6']) !!}
+        {!! Form::label('subscription_id', 'Subscription', ['class' => 'col-sm-6']) !!}
         <div class ="col-sm-6">
-            {!! Form::select('Subscription', ['Monthly', 'Annual'], "Monthly", ['class' => 'form-control', 'id' => 'subscription', 'placeholder' => 'Pick a subscription...']) !!}
+            {!! Form::select('subscription_id', [1 => 'Monthly - £10', 2 => 'Annual - £120'], $user->subscription_id , ['class' => 'form-control', 'id' => 'subscription_id']) !!}
         </div>
 </div>
 
-<div class ="form-group-row">
+{{-- <div class ="form-group-row">
         {!! Form::label('password', 'Password', ['class' => 'col-sm-6']) !!}
         <div class ="col-sm-6">
             {!! Form::text('password', null, ['class' => 'form-control', 'id' => 'password']) !!}
         </div>
-</div>
+</div> --}}
 
 
 
